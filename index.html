@@ -790,7 +790,8 @@ function closeMenu() {
   document.getElementById("navLinks").classList.remove("show");
 }
 
-function sendMessage() {
+
+async function sendMessage() {
   const prompt = document.getElementById("userPrompt").value.trim();
   const response = document.getElementById("chatResponse");
 
@@ -799,13 +800,37 @@ function sendMessage() {
     return;
   }
 
-  response.textContent =
-    "Your question:\n\n" + prompt +
-    "\n\nNEXUS QUANTUM AI is currently in its interface development stage. " +
-    "The AI research engine will be connected in the next development phase.";
+  response.textContent = "Nexus AI is thinking...";
 
-  document.getElementById("userPrompt").value = "";
+  try {
+    const result = await fetch(
+      "https://nexus-quantum-ai.nuelk182.workers.dev/api/chat",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: prompt
+        })
+      }
+    );
+
+    const data = await result.json();
+
+    if (!result.ok) {
+      throw new Error(data.error || "Request failed");
+    }
+
+    response.textContent = data.reply;
+    document.getElementById("userPrompt").value = "";
+
+  } catch (error) {
+    response.textContent =
+      "Nexus AI couldn't connect. Please try again.";
+  }
 }
+
 </script>
 
 </body>
