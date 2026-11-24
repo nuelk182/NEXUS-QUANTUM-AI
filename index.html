@@ -1,0 +1,812 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d18">
+
+<title>NEXUS QUANTUM AI | Trading & Income Intelligence</title>
+
+<style>
+:root {
+  --bg: #080d18;
+  --panel: #101827;
+  --panel2: #151f31;
+  --blue: #38bdf8;
+  --purple: #818cf8;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --border: #263449;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.container {
+  width: min(1100px, 90%);
+  margin: auto;
+}
+
+/* NAVIGATION */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(8, 13, 24, 0.94);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.logo span {
+  color: var(--blue);
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.nav-links a:hover {
+  color: var(--blue);
+}
+
+.menu-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+/* HERO */
+
+.hero {
+  padding: 85px 0 65px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: #2563eb;
+  opacity: 0.12;
+  filter: blur(130px);
+  border-radius: 50%;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+}
+
+.eyebrow {
+  display: inline-block;
+  color: var(--blue);
+  border: 1px solid #1e4963;
+  background: #0c2030;
+  border-radius: 30px;
+  padding: 7px 15px;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 7vw, 75px);
+  line-height: 1.12;
+  margin: 25px 0;
+  letter-spacing: -2px;
+}
+
+.gradient {
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  max-width: 650px;
+  margin: auto;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 13px 22px;
+  border-radius: 9px;
+  font-weight: bold;
+  font-size: 14px;
+  border: 1px solid transparent;
+  transition: 0.2s;
+}
+
+.btn-primary {
+  background: var(--blue);
+  color: #06111d;
+}
+
+.btn-primary:hover {
+  background: #7dd3fc;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--panel);
+}
+
+.btn-secondary:hover {
+  border-color: var(--blue);
+}
+
+/* DASHBOARD */
+
+.dashboard {
+  background: linear-gradient(145deg, #111c2e, #0b1220);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 25px;
+  margin-top: 55px;
+  text-align: left;
+  box-shadow: 0 25px 80px #0005;
+}
+
+.dash-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.dash-top h3 {
+  font-size: 16px;
+}
+
+.live {
+  color: #4ade80;
+  font-size: 11px;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.metric {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.metric small {
+  color: var(--muted);
+  display: block;
+  font-size: 12px;
+}
+
+.metric strong {
+  display: block;
+  font-size: 22px;
+  margin-top: 8px;
+}
+
+.metric .placeholder {
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: normal;
+}
+
+/* SECTIONS */
+
+section {
+  padding: 70px 0;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.section-heading h2 {
+  font-size: clamp(27px, 4vw, 40px);
+  margin-bottom: 10px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  max-width: 600px;
+  margin: auto;
+  font-size: 14px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature {
+  padding: 25px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  transition: 0.2s;
+}
+
+.feature:hover {
+  border-color: #287ca5;
+  transform: translateY(-4px);
+}
+
+.feature-icon {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  background: #122c40;
+  border-radius: 12px;
+  font-size: 22px;
+  margin-bottom: 18px;
+}
+
+.feature h3 {
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* AI ASSISTANT */
+
+.ai-section {
+  background: #0b1220;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.chat-box {
+  max-width: 750px;
+  margin: auto;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.chat-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ai-avatar {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0284c7, #6366f1);
+  font-weight: bold;
+}
+
+.chat-header small {
+  color: var(--muted);
+  display: block;
+}
+
+.chat-body {
+  padding: 25px;
+  min-height: 150px;
+}
+
+.message {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 14px;
+  color: #cbd5e1;
+  margin-bottom: 15px;
+  white-space: pre-wrap;
+}
+
+.chat-input {
+  padding: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.chat-input textarea {
+  width: 100%;
+  min-height: 100px;
+  background: #080d18;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 15px;
+  color: white;
+  font-size: 14px;
+  resize: vertical;
+  outline: none;
+}
+
+.chat-input textarea:focus {
+  border-color: var(--blue);
+}
+
+.chat-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.chat-actions small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* CTA */
+
+.cta {
+  text-align: center;
+  padding: 60px 25px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #111c2e, #0b1220);
+}
+
+.cta h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.cta p {
+  color: var(--muted);
+  max-width: 550px;
+  margin: auto;
+}
+
+/* FOOTER */
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 30px 0;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+footer strong {
+  color: var(--blue);
+}
+
+/* MOBILE */
+
+@media (max-width: 750px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    width: 100%;
+    background: var(--panel);
+    padding: 20px;
+    flex-direction: column;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  .hero {
+    padding-top: 65px;
+  }
+
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard {
+    padding: 17px;
+  }
+
+  section {
+    padding: 55px 0;
+  }
+
+  .cta h2 {
+    font-size: 26px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">
+      NEXUS <span>QUANTUM AI</span>
+    </a>
+
+    <button class="menu-btn" onclick="toggleMenu()">
+      Menu ☰
+    </button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#features" onclick="closeMenu()">Features</a>
+      <a href="#research" onclick="closeMenu()">Research</a>
+      <a href="#assistant" onclick="closeMenu()">AI Assistant</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<div class="hero">
+  <div class="container hero-content">
+
+    <div class="eyebrow">
+      AI-POWERED FINANCIAL INTELLIGENCE
+    </div>
+
+    <h1>
+      Research Smarter.<br>
+      <span class="gradient">Build Your Future.</span>
+    </h1>
+
+    <p>
+      Your AI-powered trading research and income assistant.
+      Explore markets, understand financial concepts,
+      and discover smarter ways to approach opportunities.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#assistant" class="btn btn-primary">
+        Explore AI Assistant →
+      </a>
+
+      <a href="#features" class="btn btn-secondary">
+        Discover Features
+      </a>
+    </div>
+
+    <div class="dashboard">
+
+      <div class="dash-top">
+        <h3>Quantum Intelligence Dashboard</h3>
+        <span class="live">● SYSTEM PREVIEW</span>
+      </div>
+
+      <div class="dash-grid">
+
+        <div class="metric">
+          <small>Market Research</small>
+          <strong>AI <span class="placeholder">Analysis</span></strong>
+        </div>
+
+        <div class="metric">
+          <small>Income Intelligence</small>
+          <strong>Smart <span class="placeholder">Ideas</span></strong>
+        </div>
+
+        <div class="metric">
+          <small>Risk Management</small>
+          <strong>Risk <span class="placeholder">Tools</span></strong>
+        </div>
+
+      </div>
+
+      <p class="notice" style="margin-top:18px">
+        Preview interface — live market data and AI services
+        will be connected in future development.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="container">
+
+    <div class="section-heading">
+      <h2>Intelligence for Your Next Move</h2>
+      <p>
+        A collection of AI-powered tools designed to help
+        you research, learn and plan with greater clarity.
+      </p>
+    </div>
+
+    <div class="features">
+
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <h3>Quantum Market Analyst</h3>
+        <p>
+          Research financial markets, understand trends
+          and explore market-moving information.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🧠</div>
+        <h3>Trading Research</h3>
+        <p>
+          Study trading strategies, technical concepts
+          and potential market scenarios.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">💡</div>
+        <h3>Income Intelligence</h3>
+        <p>
+          Explore business opportunities, digital skills
+          and practical ways to develop income.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🛡️</div>
+        <h3>Risk Calculator</h3>
+        <p>
+          Understand position sizing, potential losses
+          and risk-to-reward calculations.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <h3>Strategy Lab</h3>
+        <p>
+          Compare ideas, test assumptions
+          and learn how different strategies work.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🌐</div>
+        <h3>Financial Learning</h3>
+        <p>
+          Learn about markets, money management
+          and financial decision-making.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="research" class="ai-section">
+  <div class="container">
+
+    <div class="section-heading">
+      <h2>Research. Understand. Strategize.</h2>
+      <p>
+        Nexus Quantum AI is being developed to make
+        financial research and income exploration
+        easier to understand.
+      </p>
+    </div>
+
+    <div class="features">
+
+      <div class="feature">
+        <h3>Market Insights</h3>
+        <p>
+          Understand market terminology, economic events
+          and factors that may influence prices.
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>Business Opportunities</h3>
+        <p>
+          Research business models, startup ideas
+          and digital opportunities.
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>Decision Support</h3>
+        <p>
+          Organize information and compare options
+          before making financial decisions.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="assistant">
+  <div class="container">
+
+    <div class="section-heading">
+      <h2>Meet Your AI Assistant</h2>
+      <p>
+        Ask a question about trading research,
+        financial learning or income ideas.
+      </p>
+    </div>
+
+    <div class="chat-box">
+
+      <div class="chat-header">
+        <div class="ai-avatar">NQ</div>
+        <div>
+          <strong>Nexus Quantum AI</strong>
+          <small>Research Assistant · Preview</small>
+        </div>
+      </div>
+
+      <div class="chat-body">
+        <div class="message" id="chatResponse">
+Welcome to NEXUS QUANTUM AI.
+
+Your research and income intelligence journey starts here.
+
+The AI engine is currently under development.
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <textarea
+          id="userPrompt"
+          placeholder="Ask about trading, market research, business ideas..."
+        ></textarea>
+
+        <div class="chat-actions">
+          <small>AI engine coming soon</small>
+
+          <button
+            class="btn btn-primary"
+            onclick="sendMessage()"
+          >
+            Send Message →
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta">
+      <h2>
+        Welcome to the <span class="gradient">Nexus Era.</span>
+      </h2>
+
+      <p>
+        Research smarter. Think strategically.
+        Build your future with NEXUS QUANTUM AI.
+      </p>
+
+      <a href="#assistant" class="btn btn-primary">
+        Start Exploring →
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <strong>NEXUS QUANTUM AI</strong><br>
+    Trading Research & Income Intelligence<br><br>
+    © 2026 Nexus Quantum AI. All rights reserved.<br>
+    <br>
+    For educational and research purposes.
+    AI outputs are not guaranteed financial advice.
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("show");
+}
+
+function closeMenu() {
+  document.getElementById("navLinks").classList.remove("show");
+}
+
+function sendMessage() {
+  const prompt = document.getElementById("userPrompt").value.trim();
+  const response = document.getElementById("chatResponse");
+
+  if (!prompt) {
+    response.textContent = "Please enter a question first.";
+    return;
+  }
+
+  response.textContent =
+    "Your question:\n\n" + prompt +
+    "\n\nNEXUS QUANTUM AI is currently in its interface development stage. " +
+    "The AI research engine will be connected in the next development phase.";
+
+  document.getElementById("userPrompt").value = "";
+}
+</script>
+
+</body>
+</html>
