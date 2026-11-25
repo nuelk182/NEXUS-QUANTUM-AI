@@ -826,8 +826,8 @@ async function sendMessage() {
     document.getElementById("userPrompt").value = "";
 
   } catch (error) {
-    response.textContent =
-      "Nexus AI couldn't connect. Please try again.";
+  response.textContent =
+    error.message || "Connection failed. Please try again.";
   }
 }
 
